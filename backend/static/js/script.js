@@ -117,6 +117,14 @@ function clearFoundWordHighlights() {
     while (dragSvgElement.firstChild) {
         dragSvgElement.removeChild(dragSvgElement.firstChild);
     }
+
+    // Clear strikethrough from previous found words
+    const wordsListElement = document.getElementById('words-to-find');
+    const words = wordsListElement.getElementsByTagName('li');
+    for (let word of words) {
+        word.style.textDecoration = '';
+        word.style.color = '';
+    }
 }
 
 function selectCell(cell) {
@@ -134,6 +142,7 @@ function checkSelectedWord() {
             cell.classList.add(wordColors[selectedWord]);
         });
         keepDragLinesAsFound(selectedWord);
+        strikeThroughWord(selectedWord, wordColors[selectedWord]);
     }
     selectedCells.forEach(cell => cell.classList.remove('dragging'));
     clearSelection();
@@ -168,12 +177,25 @@ function keepDragLinesAsFound(word) {
     const foundSvgElement = document.getElementById('found-lines');
     const dragSvgElement = document.getElementById('drag-lines');
     const lines = Array.from(dragSvgElement.querySelectorAll('line'));
+    const colorClass = wordColors[word];
+    const color = getComputedStyle(document.documentElement).getPropertyValue(`--${colorClass}`);
     lines.forEach(line => {
-        line.setAttribute('stroke', 'black'); // For debugging, set to black
-        line.setAttribute('opacity', '0.2');
+        line.setAttribute('stroke', color); // Use the color of the found word
+        line.setAttribute('opacity', '0.5');
         foundSvgElement.appendChild(line);
     });
     clearDragLines();
+}
+
+function strikeThroughWord(word, colorClass) {
+    const wordsListElement = document.getElementById('words-to-find');
+    const words = wordsListElement.getElementsByTagName('li');
+    for (let li of words) {
+        if (li.textContent === word) {
+            li.style.textDecoration = 'line-through';
+            li.style.color = getComputedStyle(document.documentElement).getPropertyValue(`--${colorClass}`);
+        }
+    }
 }
 
 function clearDragLines() {

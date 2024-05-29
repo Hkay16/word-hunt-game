@@ -1,3 +1,12 @@
+:root {
+    --orange: rgba(255, 182, 113, 0.5);
+    --blue: rgba(173, 216, 230, 0.5);
+    --red: rgba(255, 105, 97, 0.5);
+    --purple: rgba(221, 160, 221, 0.5);
+    --green: rgba(119, 221, 119, 0.5);
+    --brown: rgba(195, 176, 145, 0.5);
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -72,27 +81,27 @@ h1 {
     }
 
         .cell.found.orange {
-            background-color: rgba(255, 182, 113, 0.2); /* light orange */
+            background-color: var(--orange);
         }
 
         .cell.found.blue {
-            background-color: rgba(173, 216, 230, 0.2); /* light blue */
+            background-color: var(--blue);
         }
 
         .cell.found.red {
-            background-color: rgba(255, 105, 97, 0.2); /* light red */
+            background-color: var(--red);
         }
 
         .cell.found.purple {
-            background-color: rgba(221, 160, 221, 0.2); /* light purple */
+            background-color: var(--purple);
         }
 
         .cell.found.green {
-            background-color: rgba(119, 221, 119, 0.2); /* light green */
+            background-color: var(--green);
         }
 
         .cell.found.brown {
-            background-color: rgba(195, 176, 145, 0.2); /* light brown */
+            background-color: var(--brown);
         }
 
 .controls {
