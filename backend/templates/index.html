@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Word Search Game</h1>
+        <div id="grid"></div>
+        <div class="controls">
+            <!--TODO: Add selector for grid size/difficulty-->
+            <!--TODO: Add option for zen mode or word search mode-->
+            <button onclick="generateNewGrid()">New Game</button>
+        </div>
+        <div id="words-list">
+            <h2>Words to Find:</h2>
+            <ul id="words-to-find"></ul>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

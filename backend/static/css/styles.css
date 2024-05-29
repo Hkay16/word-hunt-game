@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-gap: 5px;
+    margin: 20px auto;
+    max-width: 300px;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+    .cell.selected {
+        background-color: #a1c4fd;
+    }
+
+    .cell.found {
+        background-color: #9acd32;
+    }
+
+.controls {
+    margin: 20px;
+}
+
+#words-list {
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+    #words-list li.found {
+        text-decoration: line-through;
+        color: #9acd32;
+    }
