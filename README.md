@@ -10,7 +10,7 @@ You win the game by finding all the words in the list.
 ## *Placeholder for Running Instructions*
 
 ## Features In Progress:
-- Add opacity so that overlapping words are more obvious/clear.
+** Add opacity/color blending so that overlapping words are more obvious/clear.
 - Add a counter on the screen that will count how many words have been found.
 - Track which words have been found so the same word cannot be added to the score twice or be re-highlighted.
 - Add text popups to say when words are invalid, have already been found, or are too short.
