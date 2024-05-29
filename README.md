@@ -9,7 +9,6 @@ If you find a word that is not in the list, you will get credit for a bonus word
 You win the game by finding all the words in the list.
 
 ## Features In Progress:
-- Change the word occurance chances so that the words are
 - Make a line show up to connect the letters that you've dragged over.
 - Make the cells hitbox/select box smaller to make it easier to go in between letters at a diagonal.
 - Only the words from the actual word search list should stay highlighted after found. These words should be highlighted in a select of pastel colors (light orange, light blue, light red, light purple, light green, light brown). Make sure overlapping words are not the same color.
