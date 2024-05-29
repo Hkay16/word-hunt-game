@@ -16,6 +16,20 @@ logging.basicConfig(level=logging.DEBUG)
 # Filter the word list to include only words with 3 or more letters and convert to lowercase
 word_list = [word.lower() for word in words.words() if len(word) >= 3]
 
+# Preference for word lengths
+def select_words(num_words):
+    selected_words = []
+    while len(selected_words) < num_words:
+        word = random.choice(word_list)
+        length = len(word)
+        if 5 <= length <= 7 and random.random() < 0.7:
+            selected_words.append(word)
+        elif length < 5 and random.random() < 0.2:
+            selected_words.append(word)
+        elif length > 7 and random.random() < 0.1:
+            selected_words.append(word)
+    return selected_words
+
 DIRECTIONS = [
     (0, 1),  # Right
     (1, 0),  # Down
@@ -35,11 +49,20 @@ def get_random_direction():
     """Get a random direction for placing the next letter."""
     return random.choice(DIRECTIONS)
 
-def can_place_letter(grid, row, col, used_cells):
+def can_place_letter(grid, row, col, used_cells, letter):
     """Check if a letter can be placed on the grid at the specified position."""
     return (0 <= row < len(grid) and 0 <= col < len(grid[0])
             and (row, col) not in used_cells
-            and grid[row, col] == '')
+            and (grid[row, col] == '' or grid[row, col] == letter))
+
+def get_valid_directions(grid, row, col, letter, used_cells):
+    """Get valid directions to place the next letter."""
+    valid_directions = []
+    for direction in DIRECTIONS:
+        new_row, new_col = row + direction[0], col + direction[1]
+        if can_place_letter(grid, new_row, new_col, used_cells, letter):
+            valid_directions.append(direction)
+    return valid_directions
 
 def place_words(grid, words):
     """Place multiple words on the grid and return the list of successfully placed words."""
@@ -57,7 +80,6 @@ def place_words(grid, words):
             attempts += 1
         if not placed:
             logging.warning(f"Failed to place word: {word}")
-    fill_empty_squares(grid)
     return placed_words
 
 def try_place_word(grid, word, start_row, start_col):
@@ -66,16 +88,22 @@ def try_place_word(grid, word, start_row, start_col):
         used_cells = set()
         row, col = start_row, start_col
         positions = [(row, col)]
-        if not can_place_letter(grid, row, col, used_cells):
+        if not can_place_letter(grid, row, col, used_cells, word[0]):
             continue
         used_cells.add((row, col))
 
         for letter in word[1:]:
             placed = False
+            valid_directions = get_valid_directions(grid, row, col, letter, used_cells)
+            if not valid_directions:
+                break
             for _ in range(8):  # Try up to 8 directions to place the next letter
-                direction = get_random_direction()
+                if random.random() < 0.75 and any(grid[row + dr, col + dc] == letter for dr, dc in valid_directions):
+                    direction = random.choice([d for d in valid_directions if grid[row + d[0], col + d[1]] == letter])
+                else:
+                    direction = random.choice(valid_directions)
                 new_row, new_col = row + direction[0], col + direction[1]
-                if can_place_letter(grid, new_row, new_col, used_cells):
+                if can_place_letter(grid, new_row, new_col, used_cells, letter):
                     row, col = new_row, new_col
                     positions.append((row, col))
                     used_cells.add((row, col))
@@ -97,46 +125,46 @@ def fill_empty_squares(grid):
         for col in range(len(grid[row])):
             if grid[row, col] == '':
                 grid[row, col] = chr(random.randint(97, 122))  # Fill with random lowercase letter
+            
+# Commented out verification code for now
+# def verify_word_placement(grid, words):
+#     """Verify that all placed words can be found on the grid."""
+#     for word in words:
+#         if not find_word_on_grid(grid, word):
+#             logging.error(f"Word not found: {word}")
+#             return False
+#     return True
 
-#TODO: Search functions are not working. Need to fix them.
-#def verify_word_placement(grid, words):
-#    """Verify that all placed words can be found on the grid."""
-#    for word in words:
-#        if not find_word_on_grid(grid, word):
-#            logging.error(f"Word not found: {word}")
-#            return False
-#    return True
+# def find_word_on_grid(grid, word):
+#     """Find a word on the grid."""
+#     for row in range(len(grid)):
+#         for col in range(len(grid[row])):
+#             if grid[row, col] == word[0]:  # Check if the first letter matches
+#                 if search_from_cell(grid, word, row, col):
+#                     return True
+#     return False
 
-#def find_word_on_grid(grid, word):
-#    """Find a word on the grid."""
-#    for row in range(len(grid)):
-#        for col in range(len(grid[row])):
-#            if grid[row, col] == word[0]:  # Check if the first letter matches
-#                if search_from_cell(grid, word, row, col):
-#                    return True
-#    return False
+# def search_from_cell(grid, word, start_row, start_col):
+#     """Search for the word starting from a specific cell."""
+#     for direction in DIRECTIONS:
+#         if search_in_direction(grid, word, start_row, start_col, direction):
+#             return True
+#     return False
 
-#def search_from_cell(grid, word, start_row, start_col):
-#    """Search for the word starting from a specific cell."""
-#    for direction in DIRECTIONS:
-#        if search_in_direction(grid, word, start_row, start_col, direction):
-#            return True
-#    return False
-
-#def search_in_direction(grid, word, start_row, start_col, direction):
-#    """Search for the word in a specific direction using backtracking."""
-#    dr, dc = direction
-#    row, col = start_row, start_col
-#    path = [(row, col)]
-#    for letter in word[1:]:
-#        row += dr
-#        col += dc
-#        if not (0 <= row < len(grid) and 0 <= col < len(grid)):
-#            return False
-#        if grid[row, col] != letter:
-#            return False
-#        path.append((row, col))
-#    return True
+# def search_in_direction(grid, word, start_row, start_col, direction):
+#     """Search for the word in a specific direction using backtracking."""
+#     dr, dc = direction
+#     row, col = start_row, start_col
+#     path = [(row, col)]
+#     for letter in word[1:]:
+#         row += dr
+#         col += dc
+#         if not (0 <= row < len(grid) and 0 <= col < len(grid)):
+#             return False
+#         if grid[row, col] != letter:
+#             return False
+#         path.append((row, col))
+#     return True
 
 @app.route('/')
 def index():
@@ -147,15 +175,17 @@ def index():
 def new_grid():
     """Generate a new word search grid and return it as JSON."""
     grid_size = 10
-    num_words = random.randint(23, 90)
-    selected_words = random.sample(word_list, num_words)
+    num_words = random.randint(15, 30)  # Adjusted to reduce word density
+    selected_words = select_words(num_words)
     grid = create_empty_grid(grid_size)
     placed_words = place_words(grid, selected_words)
-    #if not verify_word_placement(grid, placed_words):
-        #logging.error("Failed to place all words correctly.")
-        #return jsonify(error="Failed to place words correctly"), 500
+    fill_empty_squares(grid)
+    
+    # Include only half of the placed words in the search list
+    search_words = random.sample(placed_words, len(placed_words) // 2)
+
     grid = grid.tolist()
-    return jsonify(grid=grid, words=placed_words, word_list=word_list)
+    return jsonify(grid=grid, words=search_words, word_list=word_list)
 
 if __name__ == '__main__':
     app.run(debug=True)

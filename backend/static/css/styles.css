@@ -10,17 +10,29 @@ body {
     overflow-y: auto;
 }
 
-.container {
+h1 {
     text-align: center;
+    margin: 20px 0;
+    font-family: "Lucida Handwriting", Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
+    margin: auto;
+    box-sizing: border-box;
 }
 
 #grid {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(10, 30px); /* Set explicit size for cells */
     grid-gap: 5px;
-    margin: 20px auto;
-    max-width: 300px;
+    padding: 10px; /* Add padding to ensure grid stays inside container */
+    box-sizing: border-box;
+    width: fit-content; /* Ensure width fits content */
 }
 
 .cell {
@@ -33,15 +45,55 @@ body {
     background-color: #fff;
     cursor: pointer;
     user-select: none;
+    position: relative;
 }
+
+    .cell::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 15px;
+        height: 15px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    .cell.selected.dragging {
+        background-color: rgba(163, 190, 255, 0.5); /* light blue with opacity */
+    }
 
     .cell.selected {
         background-color: #a1c4fd;
     }
 
     .cell.found {
-        background-color: #9acd32;
+        position: relative;
     }
+
+        .cell.found.orange {
+            background-color: rgba(255, 182, 113, 0.5); /* light orange */
+        }
+
+        .cell.found.blue {
+            background-color: rgba(173, 216, 230, 0.5); /* light blue */
+        }
+
+        .cell.found.red {
+            background-color: rgba(255, 105, 97, 0.5); /* light red */
+        }
+
+        .cell.found.purple {
+            background-color: rgba(221, 160, 221, 0.5); /* light purple */
+        }
+
+        .cell.found.green {
+            background-color: rgba(119, 221, 119, 0.5); /* light green */
+        }
+
+        .cell.found.brown {
+            background-color: rgba(195, 176, 145, 0.5); /* light brown */
+        }
 
 .controls {
     margin: 20px;
@@ -57,3 +109,20 @@ body {
         text-decoration: line-through;
         color: #9acd32;
     }
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#found-lines {
+    z-index: 1;
+}
+
+#drag-lines {
+    z-index: 2;
+}

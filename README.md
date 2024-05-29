@@ -9,14 +9,15 @@ If you find a word that is not in the list, you will get credit for a bonus word
 You win the game by finding all the words in the list.
 
 ## Features In Progress:
-- Make a line show up to connect the letters that you've dragged over.
-- Make the cells hitbox/select box smaller to make it easier to go in between letters at a diagonal.
-- Only the words from the actual word search list should stay highlighted after found. These words should be highlighted in a select of pastel colors (light orange, light blue, light red, light purple, light green, light brown). Make sure overlapping words are not the same color.
+- Make a colored line show up to connect the letters that are highlighted.
+- Add opacity so that overlapping words are more obvious/clear.
 - Add a counter on the screen that will count how many words have been found.
 - Track which words have been found so the same word cannot be added to the score twice or be re-highlighted.
 - Add text popups to say when words are invalid, have already been found, or are too short.
 - If a word from the list is found, strike through the word and change font color to gray.
 - Add "End Game" button and final popup with stats and message.
+- Add home screen with options to start game and view instructions.
+- Make title of game fun and colorful.
 
 ## Features to be added when game is functional:
 - Change the word occurance chances/options.
@@ -24,9 +25,12 @@ You win the game by finding all the words in the list.
 - Add mode that allows a timed edition with a score per word depending on the size of the word (bigger the word, higher the value of the word). No words will stay highlighted.
 - Add difficulty settings that can either change the word difficulty or the grid size/max word length.
 - Add a themed challenge mode that has a list of words per theme at random. If Original mode, the theme will be displayed at the top. If Secret mode, there will be no word search list showing to the user, but the words in the secret themed list will be highlighted when found. At the end, the theme will be displayed or the user needs to guess the theme. Bonus words are still allowed in this mode. 
+- Customization options for the grid and word search list such as colors, custom words, font, etc.
 
 ## Current bugs:
+- There are way too many of the same letters on the grid and in sequence.
 - Search functions to verify that all the words are in the grid don't work.
 - The letters of a word will highlight even if the whole word was not found. 
   Example: I found moi out of morigeration and it highlighted the moi.
 - Words from the search list can be found in multiple locations/variations.
+- Words can be the same color next to each other.
