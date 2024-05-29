@@ -81,6 +81,7 @@ function generateNewGrid() {
             populateGrid(data.grid);
             displayWords(data.words);
             wordColors = assignColorsToWords(data.words);
+            clearFoundWordHighlights();
         });
 }
 
@@ -98,6 +99,24 @@ function clearSelection() {
     selectedCells.forEach(cell => cell.classList.remove('selected', 'dragging'));
     selectedCells = [];
     clearDragLines();
+}
+
+function clearFoundWordHighlights() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.classList.remove('found', 'orange', 'blue', 'red', 'purple', 'green', 'brown');
+        cell.style.backgroundColor = '';
+    });
+
+    const foundSvgElement = document.getElementById('found-lines');
+    while (foundSvgElement.firstChild) {
+        foundSvgElement.removeChild(foundSvgElement.firstChild);
+    }
+
+    const dragSvgElement = document.getElementById('drag-lines');
+    while (dragSvgElement.firstChild) {
+        dragSvgElement.removeChild(dragSvgElement.firstChild);
+    }
 }
 
 function selectCell(cell) {
@@ -150,8 +169,8 @@ function keepDragLinesAsFound(word) {
     const dragSvgElement = document.getElementById('drag-lines');
     const lines = Array.from(dragSvgElement.querySelectorAll('line'));
     lines.forEach(line => {
-        line.setAttribute('stroke', getComputedStyle(document.documentElement).getPropertyValue(`--${wordColors[word]}`));
-        line.setAttribute('opacity', '0.5');
+        line.setAttribute('stroke', 'black'); // For debugging, set to black
+        line.setAttribute('opacity', '0.2');
         foundSvgElement.appendChild(line);
     });
     clearDragLines();

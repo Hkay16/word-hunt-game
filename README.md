@@ -1,5 +1,4 @@
 # Word Hunt Game
-
 This is a word hunt game that I created using Python.
 In this game, you will have a 10x10 grid filled with letters and a word search list.
 You can click-drag over the letters to form words where letters are connected in any direction.
@@ -8,8 +7,9 @@ If you find a word from the list, it will be highlighted in the grid.
 If you find a word that is not in the list, you will get credit for a bonus word.
 You win the game by finding all the words in the list.
 
+## *Placeholder for Running Instructions*
+
 ## Features In Progress:
-- Make a colored line show up to connect the letters that are highlighted.
 - Add opacity so that overlapping words are more obvious/clear.
 - Add a counter on the screen that will count how many words have been found.
 - Track which words have been found so the same word cannot be added to the score twice or be re-highlighted.
@@ -30,7 +30,5 @@ You win the game by finding all the words in the list.
 ## Current bugs:
 - There are way too many of the same letters on the grid and in sequence.
 - Search functions to verify that all the words are in the grid don't work.
-- The letters of a word will highlight even if the whole word was not found. 
-  Example: I found moi out of morigeration and it highlighted the moi.
 - Words from the search list can be found in multiple locations/variations.
 - Words can be the same color next to each other.

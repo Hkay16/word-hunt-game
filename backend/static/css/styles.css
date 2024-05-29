@@ -72,27 +72,27 @@ h1 {
     }
 
         .cell.found.orange {
-            background-color: rgba(255, 182, 113, 0.5); /* light orange */
+            background-color: rgba(255, 182, 113, 0.2); /* light orange */
         }
 
         .cell.found.blue {
-            background-color: rgba(173, 216, 230, 0.5); /* light blue */
+            background-color: rgba(173, 216, 230, 0.2); /* light blue */
         }
 
         .cell.found.red {
-            background-color: rgba(255, 105, 97, 0.5); /* light red */
+            background-color: rgba(255, 105, 97, 0.2); /* light red */
         }
 
         .cell.found.purple {
-            background-color: rgba(221, 160, 221, 0.5); /* light purple */
+            background-color: rgba(221, 160, 221, 0.2); /* light purple */
         }
 
         .cell.found.green {
-            background-color: rgba(119, 221, 119, 0.5); /* light green */
+            background-color: rgba(119, 221, 119, 0.2); /* light green */
         }
 
         .cell.found.brown {
-            background-color: rgba(195, 176, 145, 0.5); /* light brown */
+            background-color: rgba(195, 176, 145, 0.2); /* light brown */
         }
 
 .controls {
