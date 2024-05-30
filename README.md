@@ -40,6 +40,7 @@ You win the game by finding all the words in the list.
 - Customization options for the grid and word search list such as colors, custom words, font, etc.
 
 ## Current bugs:
+- Highlight lines move off grid when moving window.
 - Search functions to verify that all the words are in the grid don't work.
 - Words from the search list can be found in multiple locations/variations.
 - Words can be the same color next to each other.
