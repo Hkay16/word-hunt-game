@@ -13,7 +13,7 @@ You win the game by finding all the words in the list.
 3. Create a Virtual Environment:     
     python -m venv venv
 4. Activate the Virtual Environment:     
-    On Windows: venv\Scripts\activate 
+    On Windows: venv\Scripts\activate     
     On macOS/Linux: source venv/bin/activate
 5. Install the Required Packages:     
     pip install -r requirements.txt 
