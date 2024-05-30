@@ -10,15 +10,18 @@ You win the game by finding all the words in the list.
 ## How to Run the Game:
 1. Clone the Repository
 2. Navigate to the Project Directory
-3. Create a Virtual Environment:
+3. Create a Virtual Environment: 
     python -m venv venv
-4. Activate the Virtual Environment:
-    On Windows: venv\Scripts\activate
+4. Activate the Virtual Environment: 
+    On Windows: venv\Scripts\activate 
     On macOS/Linux: source venv/bin/activate
-5. Install the Required Packages: pip install -r requirements.txt
-6. Navigate to the backend folder: cd backend
-7. Run the Flask Application: python main.py
-8. Open your web browser and navigate to http://127.0.0.1:5000/ to start playing the game.
+5. Install the Required Packages: 
+    pip install -r requirements.txt 
+7. Navigate to the backend folder: 
+    cd backend 
+9. Run the Flask Application: 
+    python main.py 
+11. Open your web browser and navigate to http://127.0.0.1:5000/ to start playing the game.
 
 ## Features In Progress:
 - Fix Bugs with generating wordsearch grid: Occasionally words on the list will not be in the word search grid. There are way too many of the same letters on the grid and in sequence.
