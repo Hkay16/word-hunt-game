@@ -7,7 +7,7 @@ If you find a word from the list, it will be highlighted in the grid.
 If you find a word that is not in the list, you will get credit for a bonus word.
 You win the game by finding all the words in the list.
 
-## *Placeholder for Running Instructions*
+## How to Run the Game:
 1. Clone the Repository
 2. Navigate to the Project Directory
 3. Create a Virtual Environment:
