@@ -20,7 +20,7 @@ You win the game by finding all the words in the list.
 7. Navigate to the backend folder:     
         ```cd backend``` 
 9. Run the Flask Application:     
-        ```python main.py``` 
+        ```python app.py``` 
 11. Open your web browser and navigate to http://127.0.0.1:5000/ to start playing the game.
 
 ## Features In Progress:
