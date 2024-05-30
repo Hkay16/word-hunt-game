@@ -8,9 +8,21 @@ If you find a word that is not in the list, you will get credit for a bonus word
 You win the game by finding all the words in the list.
 
 ## *Placeholder for Running Instructions*
+1. Clone the Repository
+2. Navigate to the Project Directory
+3. Create a Virtual Environment:
+    python -m venv venv
+4. Activate the Virtual Environment:
+    On Windows: venv\Scripts\activate
+    On macOS/Linux: source venv/bin/activate
+5. Install the Required Packages: pip install -r requirements.txt
+6. Navigate to the backend folder: cd backend
+7. Run the Flask Application: python main.py
+8. Open your web browser and navigate to http://127.0.0.1:5000/ to start playing the game.
 
 ## Features In Progress:
-** Add opacity/color blending so that overlapping words are more obvious/clear.
+- Fix Bugs with generating wordsearch grid: Occasionally words on the list will not be in the word search grid. There are way too many of the same letters on the grid and in sequence.
+- Add opacity/color blending so that overlapping words are more obvious/clear.
 - Add a counter on the screen that will count how many words have been found.
 - Track which words have been found so the same word cannot be added to the score twice or be re-highlighted.
 - Add text popups to say when words are invalid, have already been found, or are too short.
@@ -28,7 +40,7 @@ You win the game by finding all the words in the list.
 - Customization options for the grid and word search list such as colors, custom words, font, etc.
 
 ## Current bugs:
-- There are way too many of the same letters on the grid and in sequence.
 - Search functions to verify that all the words are in the grid don't work.
 - Words from the search list can be found in multiple locations/variations.
 - Words can be the same color next to each other.
+- Occasionally a word will not be highlighted when found and the word will be crossed out in the list but stays black. May have a correlation to final words or last words in the list?
