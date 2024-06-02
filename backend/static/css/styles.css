@@ -57,52 +57,56 @@ h1 {
     position: relative;
 }
 
-    .cell::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 15px;
-        height: 15px;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-    }
+.cell::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
 
-    .cell.selected.dragging {
-        background-color: rgba(163, 190, 255, 0.5); /* light blue with opacity */
-    }
+.cell.selected.dragging {
+    background-color: rgba(163, 190, 255, 0.5); /* light blue with opacity */
+}
 
-    .cell.selected {
-        background-color: #a1c4fd;
-    }
+.cell.selected {
+    background-color: #a1c4fd;
+}
 
-    .cell.found {
-        position: relative;
-    }
+.cell.found {
+    position: relative;
+}
 
-        .cell.found.orange {
-            background-color: var(--orange);
-        }
+.cell.found.orange {
+    background-color: var(--orange);
+}
 
-        .cell.found.blue {
-            background-color: var(--blue);
-        }
+.cell.found.blue {
+    background-color: var(--blue);
+}
 
-        .cell.found.red {
-            background-color: var(--red);
-        }
+.cell.found.red {
+    background-color: var(--red);
+}
 
-        .cell.found.purple {
-            background-color: var(--purple);
-        }
+.cell.found.purple {
+    background-color: var(--purple);
+}
 
-        .cell.found.green {
-            background-color: var(--green);
-        }
+.cell.found.green {
+    background-color: var(--green);
+}
 
-        .cell.found.brown {
-            background-color: var(--brown);
-        }
+.cell.found.brown {
+    background-color: var(--brown);
+}
+
+.cell.found.multiple {
+    background-color: #ffffff; /* Default white for initial blend */
+}
 
 .controls {
     margin: 20px;
@@ -114,10 +118,10 @@ h1 {
     overflow-y: auto;
 }
 
-    #words-list li.found {
-        text-decoration: line-through;
-        color: #9acd32;
-    }
+#words-list li.found {
+    text-decoration: line-through;
+    color: #9acd32;
+}
 
 svg {
     position: absolute;

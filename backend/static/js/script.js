@@ -42,6 +42,7 @@ function createGrid(size) {
         cell.id = `cell-${i}`;
         cell.dataset.row = Math.floor(i / size);
         cell.dataset.col = i % size;
+        cell.dataset.colors = ''; // Store colors for blending
         gridElement.appendChild(cell);
     }
     const foundSvgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -104,8 +105,9 @@ function clearSelection() {
 function clearFoundWordHighlights() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
-        cell.classList.remove('found', 'orange', 'blue', 'red', 'purple', 'green', 'brown');
+        cell.classList.remove('found', 'orange', 'blue', 'red', 'purple', 'green', 'brown', 'multiple');
         cell.style.backgroundColor = '';
+        cell.dataset.colors = ''; // Clear stored colors
     });
 
     const foundSvgElement = document.getElementById('found-lines');
@@ -118,7 +120,6 @@ function clearFoundWordHighlights() {
         dragSvgElement.removeChild(dragSvgElement.firstChild);
     }
 
-    // Clear strikethrough from previous found words
     const wordsListElement = document.getElementById('words-to-find');
     const words = wordsListElement.getElementsByTagName('li');
     for (let word of words) {
@@ -140,6 +141,7 @@ function checkSelectedWord() {
             cell.classList.add('found');
             cell.style.backgroundColor = '';
             cell.classList.add(wordColors[selectedWord]);
+            updateCellColors(cell, wordColors[selectedWord]);
         });
         keepDragLinesAsFound(selectedWord);
         strikeThroughWord(selectedWord, wordColors[selectedWord]);
@@ -232,4 +234,45 @@ function assignColorsToWords(words) {
         wordColors[word] = availableColors[Math.floor(Math.random() * availableColors.length)];
     });
     return wordColors;
+}
+
+function updateCellColors(cell, colorClass) {
+    const existingColors = cell.dataset.colors ? cell.dataset.colors.split(',') : [];
+    if (!existingColors.includes(colorClass)) {
+        existingColors.push(colorClass);
+        cell.dataset.colors = existingColors.join(',');
+
+        if (existingColors.length > 1) {
+            cell.classList.add('multiple');
+            cell.style.backgroundColor = blendColors(existingColors.map(c => getComputedStyle(document.documentElement).getPropertyValue(`--${c}`)));
+        } else {
+            cell.classList.add(colorClass);
+            cell.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue(`--${colorClass}`);
+        }
+    }
+}
+
+function blendColors(colors) {
+    const blend = colors.reduce((prev, curr) => {
+        const prevColor = parseColor(prev);
+        const currColor = parseColor(curr);
+        const blendedColor = {
+            r: Math.floor((prevColor.r + currColor.r) / 2),
+            g: Math.floor((prevColor.g + currColor.g) / 2),
+            b: Math.floor((prevColor.b + currColor.b) / 2),
+            a: (prevColor.a + currColor.a) / 2
+        };
+        return `rgba(${blendedColor.r}, ${blendedColor.g}, ${blendedColor.b}, ${blendedColor.a})`;
+    });
+    return blend;
+}
+
+function parseColor(color) {
+    const rgba = color.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
+    return {
+        r: parseInt(rgba[0], 10),
+        g: parseInt(rgba[1], 10),
+        b: parseInt(rgba[2], 10),
+        a: parseFloat(rgba[3] || 1)
+    };
 }
