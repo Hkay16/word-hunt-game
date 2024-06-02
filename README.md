@@ -23,16 +23,17 @@ You win the game by finding all the words in the list.
         ```python app.py``` 
 11. Open your web browser and navigate to http://127.0.0.1:5000/ to start playing the game.
 
-## Features In Progress:
+## Work In Progress:
 - Fix Bugs with generating wordsearch grid: Occasionally words on the list will not be in the word search grid. There are way too many of the same letters on the grid and in sequence.
-- Add opacity/color blending so that overlapping words are more obvious/clear.
-- Add a counter on the screen that will count how many words have been found.
+- Add a button next to the counter to show all bonus words that have been found in alphabetical order.
 - Track which words have been found so the same word cannot be added to the score twice or be re-highlighted.
 - Add text popups to say when words are invalid, have already been found, or are too short.
-- If a word from the list is found, strike through the word and change font color to gray.
 - Add "End Game" button and final popup with stats and message.
 - Add home screen with options to start game and view instructions.
 - Make title of game fun and colorful.
+- Change word list container to not have scroll bar. Add a second column when necessary.
+- Make word search list longer.
+- Make words generated from smaller words?
 
 ## Features to be added when game is functional:
 - Change the word occurance chances/options.

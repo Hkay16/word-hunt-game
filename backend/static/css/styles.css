@@ -1,10 +1,10 @@
 :root {
-    --orange: rgba(255, 182, 113, 0.5);
-    --blue: rgba(173, 216, 230, 0.5);
-    --red: rgba(255, 105, 97, 0.5);
-    --purple: rgba(221, 160, 221, 0.5);
-    --green: rgba(119, 221, 119, 0.5);
-    --brown: rgba(195, 176, 145, 0.5);
+    --orange: rgba(255, 182, 113, 0.5); /* light orange with opacity */
+    --blue: rgba(173, 216, 230, 0.5); /* light blue with opacity */
+    --red: rgba(255, 105, 97, 0.5); /* light red with opacity */
+    --purple: rgba(221, 160, 221, 0.5); /* light purple with opacity */
+    --green: rgba(119, 221, 119, 0.5); /* light green with opacity */
+    --brown: rgba(195, 176, 145, 0.5); /* light brown with opacity */
 }
 
 body {
@@ -35,13 +35,20 @@ h1 {
     box-sizing: border-box;
 }
 
+.counters-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 10px;
+}
+
 #grid {
     display: grid;
-    grid-template-columns: repeat(10, 30px); /* Set explicit size for cells */
+    grid-template-columns: repeat(10, 30px);
     grid-gap: 5px;
-    padding: 10px; /* Add padding to ensure grid stays inside container */
     box-sizing: border-box;
-    width: fit-content; /* Ensure width fits content */
+    width: fit-content;
 }
 
 .cell {
@@ -55,8 +62,6 @@ h1 {
     cursor: pointer;
     user-select: none;
     position: relative;
-    padding: 5px; /* Reduce the hitbox by adding padding */
-    box-sizing: border-box; /* Ensure padding is included in the width and height */
 }
 
 .cell::after {
@@ -106,12 +111,10 @@ h1 {
     background-color: var(--brown);
 }
 
-.cell.found.multiple {
-    background-color: #ffffff; /* Default white for initial blend */
-}
-
 .controls {
     margin: 20px;
+    text-align: center;
+    width: 100%;
 }
 
 #words-list {

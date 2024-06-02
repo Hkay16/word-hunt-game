@@ -9,7 +9,11 @@
 <body>
     <div class="container">
         <h1>Word Search Game</h1>
-        <div id="grid"></div>
+        <div class="counters-wrapper">
+            <span id="word-counter">Words: 0</span>
+            <span id="bonus-counter">Bonus: 0</span>
+        </div>
+        <div id="grid" class="grid-container"></div>
         <div class="controls">
             <button onclick="generateNewGrid()">New Game</button>
         </div>
