@@ -7,6 +7,7 @@ let foundBonusWords = 0;
 const pastelColors = ["orange", "blue", "red", "purple", "green", "brown"];
 let allWords = [];
 let displayedWords = [];
+let foundWords = new Set();
 
 document.addEventListener('DOMContentLoaded', () => {
     createGrid(10);
@@ -86,8 +87,9 @@ function generateNewGrid() {
             displayWords(data.words);
             wordColors = assignColorsToWords(data.words);
             clearFoundWordHighlights();
-            allWords = data.word_list; // Store all words from the import
-            displayedWords = data.words; // Store displayed words
+            allWords = data.word_list;
+            displayedWords = data.words;
+            foundWords.clear();
             resetCounters();
         });
 }
@@ -125,7 +127,6 @@ function clearFoundWordHighlights() {
         dragSvgElement.removeChild(dragSvgElement.firstChild);
     }
 
-    // Clear strikethrough from previous found words
     const wordsListElement = document.getElementById('words-to-find');
     const words = wordsListElement.getElementsByTagName('li');
     for (let word of words) {
@@ -144,7 +145,8 @@ function checkSelectedWord() {
     const isListWord = isWordInList(selectedWord);
     const isBonusWord = isValidBonusWord(selectedWord);
 
-    if (isListWord || isBonusWord) {
+    if (!foundWords.has(selectedWord) && (isListWord || isBonusWord)) {
+        foundWords.add(selectedWord);
         selectedCells.forEach(cell => {
             cell.classList.add('found');
             cell.style.backgroundColor = '';
@@ -163,11 +165,7 @@ function checkSelectedWord() {
 }
 
 function isValidBonusWord(word) {
-    return allWords.includes(word) && !displayedWords.includes(word); // Check if word is in allWords but not in displayedWords
-}
-
-function isValidWord(word) {
-    return allWords.includes(word); // Check against all imported words
+    return allWords.includes(word) && !displayedWords.includes(word);
 }
 
 function isWordInList(word) {
@@ -202,7 +200,7 @@ function keepDragLinesAsFound(word) {
     const colorClass = wordColors[word];
     const color = getComputedStyle(document.documentElement).getPropertyValue(`--${colorClass}`);
     lines.forEach(line => {
-        line.setAttribute('stroke', color); // Use the color of the found word
+        line.setAttribute('stroke', color);
         line.setAttribute('opacity', '0.5');
         foundSvgElement.appendChild(line);
     });
@@ -269,6 +267,7 @@ function updateWordCounter(type) {
 function resetCounters() {
     foundListWords = 0;
     foundBonusWords = 0;
+    foundWords.clear();
     document.getElementById('word-counter').textContent = 'Words: 0';
     document.getElementById('bonus-counter').textContent = 'Bonus: 0';
 }
