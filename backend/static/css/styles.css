@@ -55,6 +55,8 @@ h1 {
     cursor: pointer;
     user-select: none;
     position: relative;
+    padding: 5px; /* Reduce the hitbox by adding padding */
+    box-sizing: border-box; /* Ensure padding is included in the width and height */
 }
 
 .cell::after {

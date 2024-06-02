@@ -24,7 +24,6 @@ You win the game by finding all the words in the list.
 11. Open your web browser and navigate to http://127.0.0.1:5000/ to start playing the game.
 
 ## Features In Progress:
-- Make hit boxes smaller.
 - Fix Bugs with generating wordsearch grid: Occasionally words on the list will not be in the word search grid. There are way too many of the same letters on the grid and in sequence.
 - Add opacity/color blending so that overlapping words are more obvious/clear.
 - Add a counter on the screen that will count how many words have been found.
