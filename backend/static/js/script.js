@@ -2,9 +2,9 @@ let isMouseDown = false;
 let selectedCells = [];
 let dragLines = [];
 let wordColors = {};
+const pastelColors = ["orange", "blue", "red", "purple", "green", "brown"];
 let foundListWords = 0;
 let foundBonusWords = 0;
-const pastelColors = ["orange", "blue", "red", "purple", "green", "brown"];
 let allWords = [];
 let displayedWords = [];
 let foundWords = new Set();
@@ -47,6 +47,7 @@ function createGrid(size) {
         cell.id = `cell-${i}`;
         cell.dataset.row = Math.floor(i / size);
         cell.dataset.col = i % size;
+        cell.dataset.color = 'rgba(255, 255, 255, 1)';
         gridElement.appendChild(cell);
     }
     const foundSvgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -89,7 +90,6 @@ function generateNewGrid() {
             clearFoundWordHighlights();
             allWords = data.word_list;
             displayedWords = data.words;
-            foundWords.clear();
             resetCounters();
         });
 }
@@ -114,7 +114,8 @@ function clearFoundWordHighlights() {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
         cell.classList.remove('found', 'orange', 'blue', 'red', 'purple', 'green', 'brown');
-        cell.style.backgroundColor = '';
+        cell.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+        cell.dataset.color = 'rgba(255, 255, 255, 1)';
     });
 
     const foundSvgElement = document.getElementById('found-lines');
@@ -133,6 +134,7 @@ function clearFoundWordHighlights() {
         word.style.textDecoration = '';
         word.style.color = '';
     }
+    foundWords.clear();
 }
 
 function selectCell(cell) {
@@ -142,15 +144,22 @@ function selectCell(cell) {
 
 function checkSelectedWord() {
     const selectedWord = selectedCells.map(cell => cell.textContent).join('');
-    const isListWord = isWordInList(selectedWord);
-    const isBonusWord = isValidBonusWord(selectedWord);
+    if (foundWords.has(selectedWord)) {
+        clearSelection();
+        return;
+    }
 
-    if (!foundWords.has(selectedWord) && (isListWord || isBonusWord)) {
+    const validWord = isValidWord(selectedWord);
+    const isListWord = isWordInList(selectedWord);
+
+    if (validWord) {
         foundWords.add(selectedWord);
         selectedCells.forEach(cell => {
-            cell.classList.add('found');
-            cell.style.backgroundColor = '';
-            cell.classList.add(wordColors[selectedWord]);
+            if (isListWord) {
+                console.log(`Before: ${cell.dataset.color}`);
+                updateCellColors(cell, wordColors[selectedWord]);
+                console.log(`After: ${cell.dataset.color}`);
+            }
         });
         keepDragLinesAsFound(selectedWord);
         if (isListWord) {
@@ -164,14 +173,12 @@ function checkSelectedWord() {
     clearSelection();
 }
 
-function isValidBonusWord(word) {
-    return allWords.includes(word) && !displayedWords.includes(word);
+function isValidWord(word) {
+    return allWords.includes(word);
 }
 
 function isWordInList(word) {
-    const wordsListElement = document.getElementById('words-to-find');
-    const words = Array.from(wordsListElement.getElementsByTagName('li')).map(li => li.textContent);
-    return words.includes(word);
+    return displayedWords.includes(word);
 }
 
 function updateDragLines() {
@@ -254,6 +261,44 @@ function assignColorsToWords(words) {
     return wordColors;
 }
 
+function updateCellColors(cell, colorClass) {
+    const existingColor = cell.dataset.color;
+    const newColor = getComputedStyle(document.documentElement).getPropertyValue(`--${colorClass}`);
+
+    if (existingColor === 'rgba(255, 255, 255, 1)') {
+        cell.style.backgroundColor = newColor;
+    } else {
+        const blendedColor = blendColors(existingColor, newColor);
+        cell.style.backgroundColor = blendedColor;
+    }
+
+    cell.dataset.color = cell.style.backgroundColor;
+}
+
+function blendColors(color1, color2) {
+    const c1 = parseColor(color1);
+    const c2 = parseColor(color2);
+
+    const blendedColor = {
+        r: Math.floor((c1.r + c2.r) / 2),
+        g: Math.floor((c1.g + c2.g) / 2),
+        b: Math.floor((c1.b + c2.b) / 2),
+        a: (c1.a + c2.a) / 2
+    };
+
+    return `rgba(${blendedColor.r}, ${blendedColor.g}, ${blendedColor.b}, ${blendedColor.a})`;
+}
+
+function parseColor(color) {
+    const rgba = color.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
+    return {
+        r: parseInt(rgba[0], 10),
+        g: parseInt(rgba[1], 10),
+        b: parseInt(rgba[2], 10),
+        a: parseFloat(rgba[3] || 1)
+    };
+}
+
 function updateWordCounter(type) {
     if (type === 'listWord') {
         foundListWords++;
@@ -267,7 +312,6 @@ function updateWordCounter(type) {
 function resetCounters() {
     foundListWords = 0;
     foundBonusWords = 0;
-    foundWords.clear();
     document.getElementById('word-counter').textContent = 'Words: 0';
     document.getElementById('bonus-counter').textContent = 'Bonus: 0';
 }

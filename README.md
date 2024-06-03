@@ -26,7 +26,6 @@ You win the game by finding all the words in the list.
 ## Work In Progress:
 - Fix Bugs with generating wordsearch grid: Occasionally words on the list will not be in the word search grid. There are way too many of the same letters on the grid and in sequence.
 - Add a button next to the counter to show all bonus words that have been found in alphabetical order.
-- Track which words have been found so the same word cannot be added to the score twice or be re-highlighted.
 - Add text popups to say when words are invalid, have already been found, or are too short.
 - Add "End Game" button and final popup with stats and message.
 - Add home screen with options to start game and view instructions.
@@ -36,6 +35,7 @@ You win the game by finding all the words in the list.
 - Make words generated from smaller words?
 
 ## Features to be added when game is functional:
+- Add web scraping to define the words found.
 - Change the word occurance chances/options.
 - Change it so that there is an Original mode (with word search and bonuses), and a ZEN mode that does not give a word search list at all but does checks to make sure the user has not found all possible words (no words will stay highlighted in this mode). Make sure to add the button options before the grid appears.
 - Add mode that allows a timed edition with a score per word depending on the size of the word (bigger the word, higher the value of the word). No words will stay highlighted.
