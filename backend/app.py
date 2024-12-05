@@ -1,8 +1,8 @@
 from flask import Flask, render_template, jsonify
-import random
 import numpy as np
 import nltk
 import logging
+import secrets
 
 # Download word list from nltk
 nltk.download('words')
@@ -20,13 +20,13 @@ word_list = [word.lower() for word in words.words() if len(word) >= 3]
 def select_words(num_words):
     selected_words = []
     while len(selected_words) < num_words:
-        word = random.choice(word_list)
+        word = secrets.choice(word_list)
         length = len(word)
-        if 5 <= length <= 7 and random.random() < 0.7:
+        if 5 <= length <= 7 and secrets.SystemRandom().random() < 0.7:
             selected_words.append(word)
-        elif length < 5 and random.random() < 0.2:
+        elif length < 5 and secrets.SystemRandom().random() < 0.2:
             selected_words.append(word)
-        elif length > 7 and random.random() < 0.1:
+        elif length > 7 and secrets.SystemRandom().random() < 0.1:
             selected_words.append(word)
     return selected_words
 
@@ -47,7 +47,7 @@ def create_empty_grid(size):
 
 def get_random_direction():
     """Get a random direction for placing the next letter."""
-    return random.choice(DIRECTIONS)
+    return secrets.choice(DIRECTIONS)
 
 def can_place_letter(grid, row, col, used_cells, letter):
     """Check if a letter can be placed on the grid at the specified position."""
@@ -66,13 +66,13 @@ def get_valid_directions(grid, row, col, letter, used_cells):
 
 def place_words(grid, words):
     """Place multiple words on the grid and return the list of successfully placed words."""
-    random.shuffle(words)
+    secrets.SystemRandom().shuffle(words)
     placed_words = []
     for word in words:
         placed = False
         attempts = 0
         while not placed and attempts < 100:
-            start_row, start_col = random.randint(0, len(grid) - 1), random.randint(0, len(grid) - 1)
+            start_row, start_col = secrets.SystemRandom().randint(0, len(grid) - 1), secrets.SystemRandom().randint(0, len(grid) - 1)
             if try_place_word(grid, word, start_row, start_col):
                 placed_words.append(word)
                 placed = True
@@ -98,10 +98,10 @@ def try_place_word(grid, word, start_row, start_col):
             if not valid_directions:
                 break
             for _ in range(8):  # Try up to 8 directions to place the next letter
-                if random.random() < 0.75 and any(grid[row + dr, col + dc] == letter for dr, dc in valid_directions):
-                    direction = random.choice([d for d in valid_directions if grid[row + d[0], col + d[1]] == letter])
+                if secrets.SystemRandom().random() < 0.75 and any(grid[row + dr, col + dc] == letter for dr, dc in valid_directions):
+                    direction = secrets.choice([d for d in valid_directions if grid[row + d[0], col + d[1]] == letter])
                 else:
-                    direction = random.choice(valid_directions)
+                    direction = secrets.choice(valid_directions)
                 new_row, new_col = row + direction[0], col + direction[1]
                 if can_place_letter(grid, new_row, new_col, used_cells, letter):
                     row, col = new_row, new_col
@@ -124,7 +124,7 @@ def fill_empty_squares(grid):
     for row in range(len(grid)):
         for col in range(len(grid[row])):
             if grid[row, col] == '':
-                grid[row, col] = chr(random.randint(97, 122))  # Fill with random lowercase letter
+                grid[row, col] = chr(secrets.SystemRandom().randint(97, 122))  # Fill with random lowercase letter
             
 # Commented out verification code for now
 # def verify_word_placement(grid, words):
@@ -175,14 +175,14 @@ def index():
 def new_grid():
     """Generate a new word search grid and return it as JSON."""
     grid_size = 10
-    num_words = random.randint(15, 30)  # Adjusted to reduce word density
+    num_words = secrets.SystemRandom().randint(15, 30)  # Adjusted to reduce word density
     selected_words = select_words(num_words)
     grid = create_empty_grid(grid_size)
     placed_words = place_words(grid, selected_words)
     fill_empty_squares(grid)
     
     # Include only half of the placed words in the search list
-    search_words = random.sample(placed_words, len(placed_words) // 2)
+    search_words = secrets.SystemRandom().sample(placed_words, len(placed_words) // 2)
 
     grid = grid.tolist()
     return jsonify(grid=grid, words=search_words, word_list=word_list)
